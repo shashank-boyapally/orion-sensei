@@ -1,0 +1,6 @@
+*.zip
+venv/
+*.csv
+.env
+__pycache__/
+orion/
