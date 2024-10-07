@@ -19,7 +19,7 @@ def send_slack_output_file(exit_code:int):
         channel=os.environ.get("SLACK_CHANNEL_ID"),
         title=f"Orion Output for payload job {os.environ.get('version')}",
         file=output_file_path,
-        initial_comment=f"Orion Regression analysis for version {os.environ.get('version')}: " + ':sadkw: Regression found' if exit_code==2 else  ":success: No Regression",
+        initial_comment=(':warning: Regression found' if exit_code==2 else  ":success: No Regression") + f"Orion Regression analysis for version {os.environ.get('version')}: ",
     )
     return res
 

@@ -7,10 +7,10 @@ tests :
       masterNodesType: m6a.xlarge
       masterNodesCount: 3
       workerNodesType: m6a.xlarge
-      workerNodesCount: 24
+      workerNodesCount: 6
       benchmark.keyword: cluster-density-v2
       ocpVersion: {{ version }}
-      # networkType: OVNKubernetes
+      networkType: OVNKubernetes
       # encrypted: true
       # fips: false
       # ipsec: false
@@ -23,7 +23,9 @@ tests :
       not: 
         jobConfig.name: "garbage-collection"
       labels:
-        - "[Jira: PodLatency]"
+        - "[Jira: PerfScale]"
+      direction: 1
+
     - name:  apiserverCPU
       metricName : containerCPU
       labels.namespace.keyword: openshift-kube-apiserver
@@ -33,6 +35,7 @@ tests :
         agg_type: avg
       labels:
         - "[Jira: kube-apiserver]"
+      direction: 1
 
     - name:  ovnCPU
       metricName : containerCPU
@@ -42,7 +45,8 @@ tests :
         value: cpu
         agg_type: avg
       labels:
-        - "[Jira: ovnKubernetes]"
+        - "[Jira: Networking / ovn-kubernetes]"
+      direction: 1
 
     - name:  etcdCPU
       metricName : containerCPU
@@ -53,13 +57,14 @@ tests :
         agg_type: avg
       labels:
         - "[Jira: etcd]"
-    
-    - name:  etcdDisk
-      metricName : 99thEtcdDiskBackendCommitDurationSeconds
-      metric_of_interest: value
-      agg:
-        value: duration
-        agg_type: avg
-      labels:
-        - "[Jira: etcd]"
+      direction: 1
 
+    - name: kubelet 
+      metricName : kubeletCPU 
+      metric_of_interest: value 
+      labels: 
+        - "[Jira: Node]" 
+      agg: 
+        value: cpu 
+        agg_type: avg
+      direction: 1
